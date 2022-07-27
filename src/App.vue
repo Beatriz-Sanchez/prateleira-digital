@@ -5,7 +5,6 @@
 </template>
 
 <script>
-    // AIzaSyB1lRFZHRvKOD_TWBxIHOzeMdSsDyHTT5U
 
     export default {
         name: 'App',

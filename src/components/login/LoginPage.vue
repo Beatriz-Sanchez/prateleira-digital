@@ -29,31 +29,57 @@
 
                 <v-btn
                     text
-                    @click="LoginAsGuest"
+                    @click="loginAsGuest"
                 >
                     entrar como visitante
                 </v-btn>
             </v-col>
         </v-row>
+        <v-snackbar
+            v-model="showMessage"
+            :multi-line="multiLine"
+            color="grey darken-4"
+        >
+            {{ message }}
+
+            <template #action="{ attrs }">
+                <v-btn
+                    color="pink accent-2"
+                    text
+                    v-bind="attrs"
+                    @click="showMessage = false"
+                >
+                    Close
+                </v-btn>
+            </template>
+        </v-snackbar>
     </v-container>
 </template>
 
 <script>
-
+    // AIzaSyB1lRFZHRvKOD_TWBxIHOzeMdSsDyHTT5U
     export default {
         name: 'LoginPage',
         data() {
             return {
                 token: '',
+                showMessage: false,
+                message: '',
+                multiLine: true,
             };
         },
         methods: {
             login() {
-                this.$store.commit('setAuthToken', this.token);
-                alert(this.$store.state.authToken);
+                if (this.token) {
+                    this.$store.commit('setAuthToken', this.token);
+                    this.$router.push('/book');
+                } else {
+                    this.message = 'Você deve informar um token';
+                    this.showMessage = true;
+                }
             },
-            loginAsGuest() {
-                // TODO
+            loginAsGuest() { // TODO
+                this.$router.push('/book');
             },
         },
     };
