@@ -20,7 +20,6 @@
     "vue/eqeqeq": 2,
     "no-plusplus": 0
   },
-  "plugins": [
-    "html"
-  ]
+  "plugins": ["html"]
+    
 }
