@@ -1,4 +1,5 @@
 {
+    "parser": "vue-eslint-parser",
   "extends": ["plugin:vue/recommended", "@vue/airbnb"],
   "overrides": [
     {
