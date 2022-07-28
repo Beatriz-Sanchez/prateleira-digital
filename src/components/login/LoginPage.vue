@@ -2,6 +2,7 @@
 <template>
     <v-container>
         <v-row
+            class="mt-5"
             justify="center"
         >
             <v-col
@@ -10,11 +11,16 @@
                 xl="3"
                 class="text-center"
             >
-                <h6 class="headline"> Login</h6>
+                <h6
+                    class="headline display-1 text-uppercase"
+                >
+                    Login
+                </h6>
 
                 <v-text-field
                     v-model="token"
                     label="Token"
+                    class="mb-3"
                 />
 
                 <v-btn
@@ -22,6 +28,7 @@
                     dark
                     block
                     color="light-green darken-1"
+                    class="mb-2"
                     @click="login"
                 >
                     Login
@@ -35,37 +42,17 @@
                 </v-btn>
             </v-col>
         </v-row>
-        <v-snackbar
-            v-model="showMessage"
-            :multi-line="multiLine"
-            color="grey darken-4"
-        >
-            {{ message }}
-
-            <template #action="{ attrs }">
-                <v-btn
-                    color="pink accent-2"
-                    text
-                    v-bind="attrs"
-                    @click="showMessage = false"
-                >
-                    Close
-                </v-btn>
-            </template>
-        </v-snackbar>
     </v-container>
 </template>
 
 <script>
     // AIzaSyB1lRFZHRvKOD_TWBxIHOzeMdSsDyHTT5U
+
     export default {
         name: 'LoginPage',
         data() {
             return {
                 token: '',
-                showMessage: false,
-                message: '',
-                multiLine: true,
             };
         },
         methods: {
@@ -74,11 +61,10 @@
                     this.$store.commit('setAuthToken', this.token);
                     this.$router.push('/book');
                 } else {
-                    this.message = 'Você deve informar um token';
-                    this.showMessage = true;
+                    this.$store.commit('setErrorMessage', 'Você deve informar um token');
                 }
             },
-            loginAsGuest() { // TODO
+            loginAsGuest() {
                 this.$router.push('/book');
             },
         },
