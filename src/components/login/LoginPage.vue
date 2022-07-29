@@ -36,8 +36,8 @@
 
                 <v-btn
                     text
-                    @click="loginAsGuest"
                     color="secondary"
+                    @click="loginAsGuest"
                 >
                     entrar como visitante
                 </v-btn>
