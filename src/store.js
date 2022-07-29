@@ -10,10 +10,14 @@ export default new Vuex.Store({
             text: '',
             type: '',
         },
+        logged: false,
     },
     mutations: {
         setAuthToken(state, payload) {
             state.authToken = payload;
+        },
+        setLogged(state, payload) {
+            state.logged = payload;
         },
         setErrorMessage(state, payload) {
             state.message = {

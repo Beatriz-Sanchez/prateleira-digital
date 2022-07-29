@@ -27,7 +27,7 @@
                     depressed
                     dark
                     block
-                    color="light-green darken-1"
+                    color="primary"
                     class="mb-2"
                     @click="login"
                 >
@@ -37,6 +37,7 @@
                 <v-btn
                     text
                     @click="loginAsGuest"
+                    color="secondary"
                 >
                     entrar como visitante
                 </v-btn>
@@ -46,19 +47,19 @@
 </template>
 
 <script>
-    // AIzaSyB1lRFZHRvKOD_TWBxIHOzeMdSsDyHTT5U
 
     export default {
         name: 'LoginPage',
         data() {
             return {
-                token: '',
+                token: 'AIzaSyB1lRFZHRvKOD_TWBxIHOzeMdSsDyHTT5U',
             };
         },
         methods: {
             login() {
                 if (this.token) {
                     this.$store.commit('setAuthToken', this.token);
+                    this.$store.commit('setLogged', true);
                     this.$router.push('/book');
                 } else {
                     this.$store.commit('setErrorMessage', 'Você deve informar um token');
@@ -66,6 +67,7 @@
             },
             loginAsGuest() {
                 this.$router.push('/book');
+                this.$store.commit('setLogged', true);
             },
         },
     };
