@@ -61,7 +61,7 @@
                 window.open(this.book.volumeInfo.previewLink, '_blank');
             },
             goToDetails() {
-                // TODO: levar para a nossa página de livro
+                this.$router.push(`/book/${this.book.id}`);
             },
         },
     };
