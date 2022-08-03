@@ -29,22 +29,11 @@
                     v-for="(book, i) in bookList"
                     :key="i"
                     cols="12"
+                    sm="6"
                     md="3"
-                    lg="2"
+                    xl="2"
                 >
-                    <v-card class="mx-auto">
-                        <v-card-title>{{ book.volumeInfo.title }}</v-card-title>
-                        <v-card-text>{{ book.volumeInfo.subtitle }}</v-card-text>
-                        <v-card-actions>
-                            <v-btn
-                                text
-                                small
-                                color="primary"
-                            >
-                                Ver Detalhes
-                            </v-btn>
-                        </v-card-actions>
-                    </v-card>
+                    <book-item :book="book" />
                 </v-col>
             </v-row>
         </Loading>
@@ -54,11 +43,13 @@
 <script>
     import axios from 'axios';
     import Loading from '../loading/Loading.vue';
+    import BookItem from './BookItem.vue';
 
     export default {
         name: 'BookList',
         components: {
             Loading,
+            BookItem,
         },
         data() {
             return {

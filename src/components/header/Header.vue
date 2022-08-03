@@ -6,7 +6,7 @@
         dense
         dark
     >
-        <v-toolbar-title>Header</v-toolbar-title>
+        <v-toolbar-title>Prateleira de livros</v-toolbar-title>
         <v-spacer />
         <v-toolbar-items v-if="$store.state.logged">
             <v-btn
