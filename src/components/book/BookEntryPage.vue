@@ -33,21 +33,23 @@
                 <h1 class="headline">{{ book.volumeInfo.subtitle || "Sem descrição" }}</h1>
                 <p class="mt-2">{{ book.volumeInfo.description }}</p>
                 <div>
-                    <v-subheader>Autores</v-subheader>
-                    <v-divider class="mb-3" />
-                    <v-chip
-                        v-for="(author, i) in book.volumeInfo.authors"
-                        :key="i"
-                        pill
-                    >
-                        <v-avatar
-                            left
-                            color="primary white--text"
+                    <div v-if="book.volumeInfo.authors && book.volumeInfo.authors.length > 0">
+                        <v-subheader>Autores</v-subheader>
+                        <v-divider class="mb-3" />
+                        <v-chip
+                            v-for="(author, i) in book.volumeInfo.authors"
+                            :key="i"
+                            pill
                         >
-                            {{ author.substring(0,1) }}
-                        </v-avatar>
-                        {{ author }}
-                    </v-chip>
+                            <v-avatar
+                                left
+                                color="primary white--text"
+                            >
+                                {{ author.substring(0,1) }}
+                            </v-avatar>
+                            {{ author }}
+                        </v-chip>
+                    </div>
                     <div v-if="book.volumeInfo.categories && book.volumeInfo.categories.length > 0">
                         <v-subheader class="mt-5">Categorias</v-subheader>
                         <v-divider class="mb-3" />
@@ -76,7 +78,7 @@
                             small
                             color="primary"
                             class="mb-10"
-                            @click="goToPreview"
+                            @click="goToPreview(book)"
                         >
                             Ver Prévia
                         </v-btn>
@@ -89,9 +91,11 @@
 
 <script>
     import axios from 'axios';
+    import bookService from './bookService';
 
     export default {
         name: 'BookEntryPage',
+        mixins: [bookService],
         data() {
             return {
                 book: {},
@@ -106,9 +110,6 @@
         methods: {
             goBack() {
                 this.$router.push('/book');
-            },
-            goToPreview() {
-                window.open(this.book.volumeInfo.previewLink, '_blank');
             },
         },
     };
