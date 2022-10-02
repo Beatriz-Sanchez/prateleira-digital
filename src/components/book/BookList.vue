@@ -4,15 +4,11 @@
             <v-col
                 cols="12"
             >
-                <v-text-field
-                    v-model="textSearch"
-                    label="Pesquise Algo..."
-                    @input="searchBooks"
-                />
+                <searchInputField @search="searchBooks" />
             </v-col>
         </v-row>
         <v-row
-            v-if="!textSearch"
+            v-if="!bookList.length > 0 && !ongoingSearch"
             justify="center"
         >
             <v-col
@@ -20,10 +16,10 @@
                 md="4"
                 class="text-center"
             >
-                <p>Digite algo para pesquisar</p>
+                <p>{{ notSearchingText }}</p>
             </v-col>
         </v-row>
-        <Loading :condition="searchOnGoing">
+        <Loading :condition="ongoingSearch">
             <v-row>
                 <v-col
                     v-for="(book, i) in bookList"
@@ -41,8 +37,9 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import api from '../api/api';
     import Loading from '../loading/Loading.vue';
+    import SearchInputField from '../search/SearchInputField.vue';
     import BookItem from './BookItem.vue';
 
     export default {
@@ -50,22 +47,32 @@
         components: {
             Loading,
             BookItem,
+            SearchInputField,
         },
+        mixins: [api],
         data() {
             return {
                 bookList: [],
-                textSearch: '',
-                searchOnGoing: false,
+                ongoingSearch: false,
+                notSearchingText: 'Digite algo para pesquisar',
             };
         },
         methods: {
-            searchBooks() {
-                if (this.textSearch) {
-                    this.searchOnGoing = true;
-                    axios.get(`https://www.googleapis.com/books/v1/volumes?q=${this.textSearch}`).then((response) => {
-                        this.bookList = response.data.items;
-                        this.searchOnGoing = false;
-                    });
+            searchBooks(textSearch) {
+                if (textSearch) {
+                    this.ongoingSearch = true;
+                    this.notSearchingText = 'Digite algo para pesquisar';
+                    this.get(`/volumes?q=${textSearch}`)
+                        .then((response) => {
+                            this.bookList = response.data.items;
+                            this.ongoingSearch = false;
+                            if (!this.bookList.length > 0) {
+                                this.notSearchingText = 'Nenhum resultado encontrado';
+                            }
+                        })
+                        .catch(() => {
+                            this.notSearchingText = 'Nenhum resultado encontrado';
+                        });
                 } else {
                     this.bookList = [];
                 }

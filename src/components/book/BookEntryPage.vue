@@ -90,12 +90,12 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import api from '../api/api';
     import bookService from './bookService';
 
     export default {
         name: 'BookEntryPage',
-        mixins: [bookService],
+        mixins: [api, bookService],
         data() {
             return {
                 book: {},
@@ -103,7 +103,7 @@
             };
         },
         created() {
-            axios.get(`https://www.googleapis.com/books/v1/volumes/${this.$route.params.id}`).then((res) => {
+            this.get(`/volumes/${this.$route.params.id}`).then((res) => {
                 this.book = res.data;
             });
         },
