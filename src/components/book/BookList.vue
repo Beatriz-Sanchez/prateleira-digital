@@ -65,13 +65,15 @@
                     this.get(`/volumes?q=${textSearch}`)
                         .then((response) => {
                             this.bookList = response.data.items;
-                            this.ongoingSearch = false;
                             if (!this.bookList.length > 0) {
                                 this.notSearchingText = 'Nenhum resultado encontrado';
                             }
                         })
                         .catch(() => {
                             this.notSearchingText = 'Nenhum resultado encontrado';
+                        })
+                        .finally(() => {
+                            this.ongoingSearch = false;
                         });
                 } else {
                     this.bookList = [];
