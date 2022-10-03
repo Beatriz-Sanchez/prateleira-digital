@@ -8,7 +8,7 @@
             </v-col>
         </v-row>
         <v-row
-            v-if="!bookList.length > 0 && !ongoingSearch"
+            v-if="(!ongoingSearch) && (!bookList || !bookList.length > 0)"
             justify="center"
         >
             <v-col
