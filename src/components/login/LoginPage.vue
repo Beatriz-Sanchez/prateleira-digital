@@ -55,11 +55,15 @@
                 token: 'AIzaSyB1lRFZHRvKOD_TWBxIHOzeMdSsDyHTT5U',
             };
         },
+        created() {
+            if (window.localStorage.authToken) {
+                this.$router.push({ name: 'bookList' });
+            }
+        },
         methods: {
             login() {
                 if (this.token) {
                     this.$store.commit('setAuthToken', this.token);
-                    this.$store.commit('setLogged', true);
                     this.$router.push('/book');
                 } else {
                     this.$store.commit('setErrorMessage', 'Você deve informar um token');
