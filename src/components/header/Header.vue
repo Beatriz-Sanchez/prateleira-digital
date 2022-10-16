@@ -47,7 +47,7 @@
                 this.$router.push('/book');
             },
             goToCollection() {
-                this.$router.push('/collection');
+                this.$router.push('/library');
             },
             logout() {
                 this.$store.commit('setAuthToken', '');
