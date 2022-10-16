@@ -8,6 +8,10 @@ import apiInstance from './apiInstance';
 export default {
     name: 'apiConfig',
     methods: {
+
+        // TODO: trocar esta forma de autenticação por API key
+        // usar a autenticação por OAuth 2.0 token, que é mais completa
+        // ler a documentação: https://developers.google.com/books/docs/v1/using#auth
         createInterceptors() {
             apiInstance.interceptors.request.use((config) => {
                 const newConfig = config;
@@ -26,6 +30,12 @@ export default {
                 newConfig.url += `key=${this.$store.state.authToken}`;
 
                 return newConfig;
+            }, () => {
+                this.$store.commit('showErrorMessage', 'Ops! Houve um problema ao enviar a requisição');
+            });
+
+            apiInstance.interceptors.response.use((res) => res, () => {
+                this.$store.commit('showErrorMessage', 'Ops! Houve um problema com a sua requisição');
             });
         },
     },

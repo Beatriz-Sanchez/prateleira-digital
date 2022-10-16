@@ -42,7 +42,6 @@
             this.loadingLibrary = true;
             this.get(`users/${this.userID}/bookshelves`)
                 .then((res) => {
-                    console.log(res.data.items);
                     this.libraryList = res.data.items;
                 })
                 .finally(() => {
