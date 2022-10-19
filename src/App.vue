@@ -24,7 +24,8 @@
         mixins: [apiConfig],
         created() {
             this.createInterceptors();
-            if (window.localStorage.authToken) {
+            if (window.localStorage.userID && window.localStorage.authToken) {
+                this.$store.commit('setUserID', window.localStorage.userID);
                 this.$store.commit('setAuthToken', window.localStorage.authToken);
             } else {
                 this.$router.push('/');

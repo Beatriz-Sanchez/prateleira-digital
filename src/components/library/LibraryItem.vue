@@ -9,14 +9,7 @@
         >
             <v-card-text>{{ volumeCountText }}</v-card-text>
             <v-card-actions>
-                <v-btn
-                    text
-                    small
-                    color="primary"
-                    @click="goToDetails"
-                >
-                    Ver Detalhes
-                </v-btn>
+                <DetailsButton :url="libraryDetailsUrl" />
                 <v-btn
                     v-if="shelf.previewLink"
                     text
@@ -33,9 +26,11 @@
 
 <script>
     import bookService from './bookService';
+    import DetailsButton from '../navigation/DetailsButton.vue';
 
     export default {
         name: 'LibraryItem',
+        components: { DetailsButton },
         mixins: [bookService],
         props: {
             shelf: { type: Object, required: true },
@@ -50,10 +45,8 @@
                 if (!this.shelf || !this.shelf.volumeCount) return 'Sem livros';
                 return `Contém ${this.shelf.volumeCount} ${this.shelf.volumeCount === 1 ? 'livro' : 'livros'}`;
             },
-        },
-        methods: {
-            goToDetails() {
-                this.$router.push(`/book/${this.shelf.id}`);
+            libraryDetailsUrl() {
+                return `/library/${this.shelf.id}`;
             },
         },
     };

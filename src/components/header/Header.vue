@@ -50,6 +50,7 @@
                 this.$router.push('/library');
             },
             logout() {
+                this.$store.commit('setUserID', '');
                 this.$store.commit('setAuthToken', '');
                 this.$router.push('/');
             },

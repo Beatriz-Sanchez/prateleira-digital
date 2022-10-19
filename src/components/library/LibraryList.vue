@@ -35,12 +35,11 @@
             return {
                 libraryList: null,
                 loadingLibrary: false,
-                userID: '107514126961081396518',
             };
         },
         created() {
             this.loadingLibrary = true;
-            this.get(`users/${this.userID}/bookshelves`)
+            this.get(`users/${this.$store.state.userID}/bookshelves`)
                 .then((res) => {
                     this.libraryList = res.data.items;
                 })

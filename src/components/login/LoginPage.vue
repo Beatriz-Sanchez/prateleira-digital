@@ -18,6 +18,11 @@
                 </h6>
 
                 <v-text-field
+                    v-model="userID"
+                    label="ID do usuário"
+                    class="mb-3"
+                />
+                <v-text-field
                     v-model="token"
                     label="Token"
                     class="mb-3"
@@ -53,6 +58,7 @@
         data() {
             return {
                 token: 'AIzaSyB1lRFZHRvKOD_TWBxIHOzeMdSsDyHTT5U',
+                userID: '107514126961081396518',
             };
         },
         created() {
@@ -62,11 +68,12 @@
         },
         methods: {
             login() {
-                if (this.token) {
+                if (this.userID && this.token) {
+                    this.$store.commit('setUserID', this.userID);
                     this.$store.commit('setAuthToken', this.token);
                     this.$router.push('/book');
                 } else {
-                    this.$store.commit('setErrorMessage', 'Você deve informar um token');
+                    this.$store.commit('setErrorMessage', 'Você deve informar ID e token');
                 }
             },
             loginAsGuest() {
